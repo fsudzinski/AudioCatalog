@@ -1,0 +1,158 @@
+﻿@model Sudzinski.AudioCatalog.WebApp.Models.HomeViewModel
+
+<div class="container mt-5">
+    @* <h1 class="display-4 mb-4">Producers and Speakers</h1> *@
+
+    <!-- Tabs -->
+    <ul class="nav nav-tabs" id="dataTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link active" id="producers-tab" data-bs-toggle="tab" href="#producers" role="tab" aria-controls="producers" aria-selected="true">Producers</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="speakers-tab" data-bs-toggle="tab" href="#speakers" role="tab" aria-controls="speakers" aria-selected="false">Speakers</a>
+        </li>
+    </ul>
+
+    <!-- Tab Content -->
+    <div class="tab-content mt-4">
+        <style>
+            .table-btn-column {
+                width: 1%;
+                white-space: nowrap;
+            }
+        </style>
+
+        <!-- Producers Tab -->
+        <div class="tab-pane fade show active" id="producers" role="tabpanel" aria-labelledby="producers-tab">
+            <h2>Producers</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="producersSearch">Search Producers:</label>
+                        <input type="text" id="producersSearch" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="countryFilter">Filter by Country:</label>
+                        <select id="countryFilter" class="form-control">
+                            <option value="">All</option>
+                            @foreach (var country in Model.AllCountries)
+                            {
+                                <option value="@country">@country</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <table id="producersTable" class="table table-striped">
+                <thead>
+                    <tr>                        
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Country of origin</th>
+                        <th>Website</th>
+                        <th class="table-btn-column"></th>
+                        <th class="table-btn-column"><a type="button" class="btn btn-success btn-sm float-end" href="/Producers/Add" id="addNewProducer">+</a></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var producer in Model.Producers)
+                    {
+                        <tr>
+                            <td>@producer.Id</td>
+                            <td>@producer.Name</td>
+                            <td class="countryData">@producer.CountryOfOrigin</td>
+                            <td><a href="@producer.Website" target="_blank">@producer.Website</a></td>
+                            <td><a class="btn btn-primary btn-sm" href="/Producers/Edit/@producer.Id" id="editProducer" data-id="@producer.Id">Edit</a></td>
+                            <td><a class="btn btn-danger btn-sm" href="/Producers/Delete/@producer.Id" id="deleteProducer" data-id="@producer.Id">Delete</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Speakers Tab -->
+        <div class="tab-pane fade" id="speakers" role="tabpanel" aria-labelledby="speakers-tab">
+            <h2>Speakers</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="speakersSearch">Search Speakers:</label>
+                        <input type="text" id="speakersSearch" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="mb-3">
+                        <label for="colorFilter">Filter by Color:</label>
+                        <select id="colorFilter" class="form-control">
+                            <option value="">All</option>
+                            @foreach (var color in Model.AllColors)
+                            {
+                                <option value="@color">@color</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="mb-3">
+                        <label for="maxWeightFilter">Max Weight:</label>
+                        <input type="number" id="maxWeightFilter" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="mb-3">
+                        <label for="minPowerFilter">Min Power:</label>
+                        <input type="number" id="minPowerFilter" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <table id="speakersTable" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Producer</th>
+                        <th>Power [W]</th>
+                        <th>Weight [kg]</th>
+                        <th>Color</th>
+                        <th class="table-btn-column"></th>
+                        <th class="table-btn-column"><a type="button" class="btn btn-success btn-sm float-end" href="/Speakers/Add" id="addNewSpeaker">+</a></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var speaker in Model.Speakers)
+                    {
+                        <tr>
+                            <td>@speaker.Id</td>
+                            <td>@speaker.Name</td>
+                            <td>@speaker.Producer.Name</td>
+                            <td>@speaker.Power</td>
+                            <td>@speaker.Weight</td>
+                            <td>@speaker.Color</td>
+                            <td><a class="btn btn-primary btn-sm" href="/Speakers/Edit/@speaker.Id" id="editSpeaker" data-id="@speaker.Id">Edit</a></td>
+                            <td><a class="btn btn-danger btn-sm" href="/Speakers/Delete/@speaker.Id" id="deleteSpeaker" data-id="@speaker.Id">Delete</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Bootstrap JS (Popper.js and Bootstrap JS) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="~/js/site.js"></script>
+
+<script>
+    $(document).ready(function () {
+        var activeTab = '@ViewBag.ActiveTab';
+        if (activeTab) {            
+            var tab = new bootstrap.Tab(document.getElementById(activeTab));;
+            tab.show();
+        }
+    });
+</script>

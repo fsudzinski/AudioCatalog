@@ -1,0 +1,11 @@
+﻿@model Sudzinski.AudioCatalog.WebApp.Models.DeleteProducerViewModel
+
+<h2>Confirm Deletion</h2>
+
+<p>Are you sure you want to delete the producer '@Model.Name'?</p>
+<p><strong>Warning:</strong> Deleting this producer will also delete all speakers associated with it.</p>
+<form method="post" asp-action="Delete" asp-route-id="@Model.Id">
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a href="/Home" class="btn btn-secondary">Cancel</a>
+</form>

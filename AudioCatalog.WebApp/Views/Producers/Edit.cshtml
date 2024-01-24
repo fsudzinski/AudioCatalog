@@ -1,0 +1,27 @@
+﻿@model Sudzinski.AudioCatalog.WebApp.Models.EditProducerViewModel
+
+<h2>Edit Producer</h2>
+
+<form method="post" asp-controller="Producers" asp-action="Edit">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="form-group">
+        <label asp-for="Name">Name:</label>
+        <input asp-for="Name" class="form-control" required>
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="CountryOfOrigin">Country of Origin:</label>
+        <input asp-for="CountryOfOrigin" class="form-control" required>
+        <span asp-validation-for="CountryOfOrigin" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Website">Website:</label>
+        <input asp-for="Website" class="form-control" required>
+        <span asp-validation-for="Website" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Update Producer</button>
+</form>
