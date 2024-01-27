@@ -1,6 +1,6 @@
 ﻿using Foundation;
 
-namespace AudioCatalog.Maui
+namespace Sudzinski.AudioCatalog.MAUI
 {
     [Register("AppDelegate")]
     public class AppDelegate : MauiUIApplicationDelegate

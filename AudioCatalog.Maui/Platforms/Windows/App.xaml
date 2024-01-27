@@ -1,8 +1,7 @@
 ﻿<maui:MauiWinUIApplication
-    x:Class="AudioCatalog.Maui.WinUI.App"
+    x:Class="Sudzinski.AudioCatalog.MAUI.WinUI.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:maui="using:Microsoft.Maui"
-    xmlns:local="using:AudioCatalog.Maui.WinUI">
-
+    xmlns:local="using:AudioCatalog.MAUI.WinUI">
 </maui:MauiWinUIApplication>

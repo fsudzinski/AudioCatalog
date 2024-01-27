@@ -1,7 +1,7 @@
 ﻿using ObjCRuntime;
 using UIKit;
 
-namespace AudioCatalog.Maui
+namespace Sudzinski.AudioCatalog.MAUI
 {
     public class Program
     {

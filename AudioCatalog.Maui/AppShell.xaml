@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Shell
-    x:Class="AudioCatalog.Maui.AppShell"
+    x:Class="Sudzinski.AudioCatalog.MAUI.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:AudioCatalog.Maui"
+    xmlns:local="clr-namespace:Sudzinski.AudioCatalog.MAUI"
     Shell.FlyoutBehavior="Disabled"
-    Title="AudioCatalog.Maui">
+    Title="Sudzinski.AudioCatalog.MAUI">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <FlyoutItem>
+        <ShellContent
+            Title="Producers"
+            ContentTemplate="{DataTemplate local:ProducersPage}"
+            Route="ProducersPage" />
+        <ShellContent
+            Title="Speakers"
+            ContentTemplate="{DataTemplate local:SpeakersPage}"
+            Route="SpeakersPage" />
+    </FlyoutItem>    
 
 </Shell>

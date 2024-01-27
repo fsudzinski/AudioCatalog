@@ -1,4 +1,4 @@
-﻿namespace AudioCatalog.Maui
+﻿namespace Sudzinski.AudioCatalog.MAUI
 {
     public partial class AppShell : Shell
     {

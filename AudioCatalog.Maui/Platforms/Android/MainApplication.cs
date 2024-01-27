@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Runtime;
 
-namespace AudioCatalog.Maui
+namespace Sudzinski.AudioCatalog.MAUI
 {
     [Application]
     public class MainApplication : MauiApplication

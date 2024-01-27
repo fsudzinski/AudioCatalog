@@ -2,7 +2,7 @@ using System;
 using Microsoft.Maui;
 using Microsoft.Maui.Hosting;
 
-namespace AudioCatalog.Maui
+namespace Sudzinski.AudioCatalog.MAUI
 {
     internal class Program : MauiApplication
     {

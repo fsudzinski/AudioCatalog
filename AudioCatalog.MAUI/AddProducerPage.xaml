@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:Sudzinski.AudioCatalog.MAUI.ViewModels"
+             x:Class="Sudzinski.AudioCatalog.MAUI.AddProducerPage"
+             Title="Add Producer">
+
+    <VerticalStackLayout Margin="20">
+
+        <Entry Placeholder="Name" Text="{Binding Name, Mode=TwoWay}" Margin="0,0,0,10"/>
+
+        <Entry Placeholder="Country of Origin" Text="{Binding CountryOfOrigin, Mode=TwoWay}" Margin="0,0,0,10"/>
+
+        <Entry Placeholder="Website" Text="{Binding Website, Mode=TwoWay}" Margin="0,0,0,10"/>
+
+        <Button Text="Save" Command="{Binding SaveProducerCommand}" BackgroundColor="LimeGreen" Margin="0,0,0,10"/>
+
+    </VerticalStackLayout>
+</ContentPage>
