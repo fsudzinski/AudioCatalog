@@ -5,7 +5,41 @@
              x:Class="Sudzinski.AudioCatalog.MAUI.ProducersPage"
              Title="Producers">
     <VerticalStackLayout>
-        <!-- Header Labels -->
+
+        <Grid Padding="10,5,10,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <SearchBar
+                Placeholder="Search by Name"
+                Text="{Binding SearchText, Mode=TwoWay}"
+                SearchCommand="{Binding SearchCommand}"
+                SearchCommandParameter="{Binding SearchText}"
+                VerticalOptions="Start"
+                HorizontalOptions="FillAndExpand" 
+                Margin="10,5,10,5"
+                Grid.Column="0" />
+
+            <Label
+                Text="Select Country:"
+                FontSize="Medium"
+                TextColor="White"
+                HorizontalOptions="Start"
+                VerticalOptions="Center"
+                Grid.Column="1" />
+            <Picker
+                ItemsSource="{Binding Countries}"
+                SelectedItem="{Binding SelectedCountry, Mode=TwoWay}"
+                VerticalOptions="Start"
+                HorizontalOptions="FillAndExpand"
+                Margin="10,5,10,5"
+                Grid.Column="2" 
+                SelectedIndexChanged="{Binding FilterByCountry}"/>
+        </Grid>
+
         <Grid BackgroundColor="MediumPurple" Padding="10,5,10,5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100"/>
@@ -22,7 +56,6 @@
             <Button Text="+" FontSize="Small" Grid.Column="4" TextColor="White" BackgroundColor="LimeGreen" HorizontalOptions="End" VerticalOptions="Center" Command="{Binding OpenAddProducerPageCommand}"/>
         </Grid>
 
-        <!-- Data Rows -->
         <ListView ItemsSource="{Binding Producers}" SeparatorVisibility="Default">
             <ListView.ItemTemplate>
                 <DataTemplate>
