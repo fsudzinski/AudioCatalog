@@ -1,12 +1,63 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:Sudzinski.AudioCatalog.MAUI.ViewModels"
              x:Class="Sudzinski.AudioCatalog.MAUI.SpeakersPage"
-             Title="SpeakersPage">
+             Title="Speakers">
     <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+
+        <!-- Add Search and Country Filter as in the ProducersPage -->
+
+        <Grid BackgroundColor="MediumPurple" Padding="10,5,10,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Text="ID" FontSize="Medium" Grid.Column="0" TextColor="White" HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+            <Label Text="Name" FontSize="Medium" Grid.Column="1" TextColor="White" HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+            <Label Text="Producer" FontSize="Medium" Grid.Column="2" TextColor="White" HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+            <Label Text="Power [W]" FontSize="Medium" Grid.Column="3" TextColor="White" HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+            <Label Text="Weight [kg]" FontSize="Medium" Grid.Column="4" TextColor="White" HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+            <Label Text="Color" FontSize="Medium" Grid.Column="5" TextColor="White" HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+            <Button Text="+" FontSize="Small" Grid.Column="6" TextColor="White" BackgroundColor="LimeGreen" HorizontalOptions="End" VerticalOptions="Center" Command="{Binding OpenAddSpeakerPageCommand}"/>
+        </Grid>
+
+        <ListView ItemsSource="{Binding Speakers}" SeparatorVisibility="Default">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid x:DataType="viewmodel:SpeakerViewModel" Padding="10,5,10,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label Text="{Binding Id}" FontSize="Medium" Grid.Column="0" HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+                            <Label Text="{Binding Name}" FontSize="Medium" Grid.Column="1" HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+                            <Label Text="{Binding Producer.Name}" FontSize="Medium" Grid.Column="2" HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+                            <Label Text="{Binding Power}" FontSize="Medium" Grid.Column="3" HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+                            <Label Text="{Binding Weight}" FontSize="Medium" Grid.Column="4" HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+                            <Label Text="{Binding Color}" FontSize="Medium" Grid.Column="5" HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+                            <Button Text="Edit" FontSize="Small" Grid.Column="6" TextColor="White" BackgroundColor="Blue" HorizontalOptions="End" VerticalOptions="Center" Command="{Binding OpenEditSpeakerPageCommand}" CommandParameter="{Binding .}" Margin="0,0,10,0"/>
+                            <Button Text="Delete" FontSize="Small" Grid.Column="7" TextColor="White" BackgroundColor="Red" HorizontalOptions="End" VerticalOptions="Center" Command="{Binding DeleteSpeakerCommand}"/>
+
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
     </VerticalStackLayout>
 </ContentPage>

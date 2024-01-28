@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -33,10 +32,6 @@ namespace Sudzinski.AudioCatalog.MAUI.ViewModels
         {
             
             _blc.CreateProducer(Name, CountryOfOrigin, Website);
-
-            Name = string.Empty;
-            CountryOfOrigin = string.Empty;
-            Website = string.Empty;
 
             WeakReferenceMessenger.Default.Send("ProducerAdded");
             Application.Current.MainPage.Navigation.PopAsync();

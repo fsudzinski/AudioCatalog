@@ -19,9 +19,7 @@ namespace Sudzinski.AudioCatalog.MAUI.ViewModels
         public List<string> Countries { set; get; }
         private string countriesPickerPlaceholder = "All";
 
-
         public ICommand OpenAddProducerPageCommand { get; }
-        //public ICommand SearchCommand { get; }
 
         public ProducersCollectionViewModel(BLC.BLC blc)
         {
@@ -32,7 +30,6 @@ namespace Sudzinski.AudioCatalog.MAUI.ViewModels
             LoadData();
 
             OpenAddProducerPageCommand = new Command(OnOpenAddProducerPage);
-            //SearchCommand = new Command(PerformSearch);
         }
 
         public void LoadData()

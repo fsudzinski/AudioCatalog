@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:Sudzinski.AudioCatalog.MAUI.ViewModels"
+             x:Class="Sudzinski.AudioCatalog.MAUI.EditSpeakerPage"
+             Title="Edit Speaker">
+    <VerticalStackLayout Margin="20">
+
+        <Entry Placeholder="Name" Text="{Binding Name, Mode=TwoWay}" Margin="0,0,0,10"/>
+
+        <Entry Placeholder="Producer" Text="Producer" Margin="0,0,0,10"/>
+
+        <Entry Placeholder="Power" Text="{Binding Power, Mode=TwoWay}" Margin="0,0,0,10"/>
+
+        <Entry Placeholder="Weight" Text="{Binding Weight, Mode=TwoWay}" Margin="0,0,0,10"/>
+
+        <Entry Placeholder="Color" Text="Color" Margin="0,0,0,10"/>
+
+        <Button Text="Save" Command="{Binding SaveProducerCommand}" BackgroundColor="LimeGreen" Margin="0,0,0,10"/>
+
+    </VerticalStackLayout>
+</ContentPage>
