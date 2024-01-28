@@ -7,23 +7,31 @@
     <VerticalStackLayout Margin="20">
 
         <Entry Placeholder="Name" Text="{Binding Name, Mode=TwoWay}" Margin="0,0,0,10"/>
-
-        <!--<Picker
+        
+        <Label Text="Select Producer" FontSize="Micro" TextColor="White" HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+        <Picker
+            x:Name="ProducerPicker"
             ItemsSource="{Binding Producers}"
             SelectedItem="{Binding SelectedProducer, Mode=TwoWay}"
             VerticalOptions="Start"
             HorizontalOptions="FillAndExpand"
-            Margin="10,5,10,5"
-            Grid.Column="2" 
-            SelectedIndexChanged="CountryPicker_SelectedItemChanged"/>-->
+            Margin="0,0,0,10"/>
 
         <Entry Placeholder="Power" Text="{Binding Power, Mode=TwoWay}" Margin="0,0,0,10"/>
 
         <Entry Placeholder="Weight" Text="{Binding Weight, Mode=TwoWay}" Margin="0,0,0,10"/>
 
-        <Entry Placeholder="Color" Text="Color" Margin="0,0,0,10"/>
+        <Label Text="Select Color" FontSize="Micro" TextColor="White" HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+        <Picker
+            x:Name="ColorPicker"
+            ItemsSource="{Binding Colors}"
+            SelectedItem="{Binding selectedColor, Mode=TwoWay}"
+            VerticalOptions="Start"
+            HorizontalOptions="FillAndExpand"
+            Margin="0,0,0,10">
+        </Picker>
 
-        <Button Text="Save" Command="{Binding SaveProducerCommand}" BackgroundColor="LimeGreen" Margin="0,0,0,10"/>
+        <Button Text="Save" Command="{Binding SaveSpeakerCommand}" BackgroundColor="LimeGreen" Margin="0,0,0,10"/>
 
     </VerticalStackLayout>
 </ContentPage>

@@ -8,5 +8,7 @@ public partial class AddSpeakerPage : ContentPage
 	{
 		InitializeComponent();
 		BindingContext = viewModel;
-	}
+        ColorPicker.SelectedIndex = 0;
+        ProducerPicker.SelectedIndex = 0;
+    }
 }

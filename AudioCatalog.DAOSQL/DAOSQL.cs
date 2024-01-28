@@ -9,7 +9,8 @@ namespace Sudzinski.AudioCatalog.DAOSQL
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=DAOSQL.db");
+            var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DAOSQL.db");
+            optionsBuilder.UseSqlite($"Data Source={path}");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

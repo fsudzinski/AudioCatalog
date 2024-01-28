@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -14,23 +15,35 @@ namespace Sudzinski.AudioCatalog.MAUI.ViewModels
         [ObservableProperty]
         private string name;
         [ObservableProperty]
-        private IProducer producer;
-        [ObservableProperty]
         private float power;
         [ObservableProperty]
         private float weight;
+
         [ObservableProperty]
-        private ColorType color;
+        private ObservableCollection<ProducerViewModel> producers;
+        [ObservableProperty]
+        private ProducerViewModel selectedProducer;
+
+        [ObservableProperty]
+        public ColorType[] colors = (ColorType[])Enum.GetValues(typeof(ColorType));
+        [ObservableProperty]
+        private ColorType selectedColor;
 
         public AddSpeakerViewModel(BLC.BLC blc)
         {
             _blc = blc;
 
             Name = string.Empty;
-            Producer = null;
             Power = 0;
             Weight = 0;
-            Color = ColorType.Black;
+
+            Producers = new ObservableCollection<ProducerViewModel>();
+
+            Producers.Clear();
+            foreach (var producer in _blc.GetAllProducers())
+            {
+                Producers.Add(new ProducerViewModel(producer, _blc));
+            }
 
             PropertyChanged += OnPropertyChanged;
         }
@@ -38,7 +51,7 @@ namespace Sudzinski.AudioCatalog.MAUI.ViewModels
         [RelayCommand(CanExecute = nameof(CanSaveSpeaker))]
         private void SaveSpeaker()
         {
-            _blc.CreateSpeaker(Name, Producer.Id, Power, Weight, Color);
+            _blc.CreateSpeaker(Name, SelectedProducer.Id, Power, Weight, selectedColor);
 
             WeakReferenceMessenger.Default.Send("SpeakerAdded");
             Application.Current.MainPage.Navigation.PopAsync();
@@ -47,6 +60,7 @@ namespace Sudzinski.AudioCatalog.MAUI.ViewModels
         private bool CanSaveSpeaker()
         {
             return !string.IsNullOrWhiteSpace(Name)
+                && SelectedProducer != null
                 && Power > 0
                 && Weight > 0;
         }

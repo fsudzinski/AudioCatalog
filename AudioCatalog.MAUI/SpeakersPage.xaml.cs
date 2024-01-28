@@ -10,6 +10,8 @@ public partial class SpeakersPage : ContentPage
 	{
 		InitializeComponent();
 		BindingContext = viewModel;
+        ProducersPicker.SelectedIndex = 0;
+        ColorPicker.SelectedIndex = 0;
 
         WeakReferenceMessenger.Default.Register<string>(this, (r, m) =>
         {
@@ -19,13 +21,28 @@ public partial class SpeakersPage : ContentPage
             }
         });
     }
-    //private void CountryPicker_SelectedItemChanged(object sender, EventArgs e)
-    //{
-    //    ViewModel.FilterProducers();
-    //}
+    private void ProducerPicker_SelectedItemChanged(object sender, EventArgs e)
+    {
+        ViewModel.FilterSpeakers();
+    }
 
-    //private void ProducersSearch_TextChanged(object sender, TextChangedEventArgs e)
-    //{
-    //    ViewModel.FilterProducers();
-    //}
+    private void ProducersSearch_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        ViewModel.FilterSpeakers();
+    }
+
+    private void MinPower_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        ViewModel.FilterSpeakers();
+    }
+
+    private void MaxWeight_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        ViewModel.FilterSpeakers();
+    }
+
+    private void ColorPicker_SelectedItemChanged(object sender, EventArgs e)
+    {
+        ViewModel.FilterSpeakers();
+    }
 }

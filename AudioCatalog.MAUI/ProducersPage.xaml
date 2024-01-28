@@ -24,12 +24,13 @@
 
             <Label
                 Text="Select Country:"
-                FontSize="Medium"
+                FontSize="Small"
                 TextColor="White"
                 HorizontalOptions="Start"
                 VerticalOptions="Center"
                 Grid.Column="1" />
             <Picker
+                x:Name="CountryPicker"
                 ItemsSource="{Binding Countries}"
                 SelectedItem="{Binding SelectedCountry, Mode=TwoWay}"
                 VerticalOptions="Start"

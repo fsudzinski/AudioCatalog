@@ -17,4 +17,22 @@
     <ProjectReference Include="..\AudioCatalog.Interfaces\AudioCatalog.Interfaces.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="AudioCatalog.DAOMock.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="AudioCatalog.DAOSQL.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="DAOSQL.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="DAOSQL.db-shm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="DAOSQL.db-wal">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

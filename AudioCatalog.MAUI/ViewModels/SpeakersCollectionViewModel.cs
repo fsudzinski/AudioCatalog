@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Sudzinski.AudioCatalog.Core;
+using Sudzinski.AudioCatalog.Interfaces;
 
 namespace Sudzinski.AudioCatalog.MAUI.ViewModels
 {
@@ -12,18 +13,17 @@ namespace Sudzinski.AudioCatalog.MAUI.ViewModels
         [ObservableProperty]
         private string searchText;
         [ObservableProperty]
-        private string selectedProducer;
+        private ProducerViewModel selectedProducer;
         [ObservableProperty]
-        private string powerText;
+        private float minPower;
         [ObservableProperty]
-        private string weightText;
+        private float maxWeight;
         [ObservableProperty]
         private string selectedColor;
 
-        public List<string> Producers { set; get; }
-        private string producersPickerPlaceholder = "All";
+        public List<ProducerViewModel> Producers { set; get; }
+        public List<string> Colors { get; } = new List<string> { "All" };
 
-        public ColorType[] Colors = (ColorType[])Enum.GetValues(typeof(ColorType));
 
         [ObservableProperty]
         private ObservableCollection<SpeakerViewModel> speakers;
@@ -38,6 +38,11 @@ namespace Sudzinski.AudioCatalog.MAUI.ViewModels
 
             LoadData();
 
+            foreach (var color in Enum.GetValues(typeof(ColorType)))
+            {
+                Colors.Add(color.ToString());
+            }
+
             OpenAddSpeakerPageCommand = new Command(OnOpenAddSpeakerPage);
         }
 
@@ -50,33 +55,59 @@ namespace Sudzinski.AudioCatalog.MAUI.ViewModels
                 Speakers.Add(new SpeakerViewModel(speaker, _blc));
             }
 
-            Producers = _blc.GetAllProducers().Select(p => p.Name).Distinct().ToList();
-            Producers.Insert(0, producersPickerPlaceholder);
+            Producers = new List<ProducerViewModel>();
+            
+            foreach (var producer in _blc.GetAllProducers())
+            {
+                Producers.Add(new ProducerViewModel(producer, _blc));
+            }
+
+            var allProducer = new ProducerViewModel(Producers[0], _blc);
+            allProducer.Id = 0;
+            allProducer.Name = "All";
+            allProducer.CountryOfOrigin = "";
+            allProducer.Website = "";
+            Producers.Insert(0, allProducer);
         }
 
         private void OnOpenAddSpeakerPage()
         {
             App.Current.MainPage.Navigation.PushAsync(new AddSpeakerPage(new AddSpeakerViewModel(_blc)));
         }
-        //public void FilterProducers()
-        //{
-        //    var filteredProducers = _blc.GetAllProducers();
+        public void FilterSpeakers()
+        {
+            var filteredSpeakers = _blc.GetAllSpeakers();
 
-        //    if (!string.IsNullOrWhiteSpace(SearchText))
-        //    {
-        //        filteredProducers = filteredProducers.Where(p => p.Name.ToLowerInvariant().Contains(SearchText.ToLowerInvariant()));
-        //    }
+            if (!string.IsNullOrWhiteSpace(SearchText))
+            {
+                filteredSpeakers = filteredSpeakers.Where(s => s.Name.ToLowerInvariant().Contains(SearchText.ToLowerInvariant()));
+            }
 
-        //    if (!string.IsNullOrWhiteSpace(SelectedCountry) && !string.Equals(SelectedCountry, countriesPickerPlaceholder))
-        //    {
-        //        filteredProducers = filteredProducers.Where(p => p.CountryOfOrigin.ToLowerInvariant() == SelectedCountry.ToLowerInvariant());
-        //    }
+            if (SelectedProducer != null && SelectedProducer.Id != 0)
+            {
+                filteredSpeakers = filteredSpeakers.Where(s => s.Producer.Id == SelectedProducer.Id);
+            }
 
-        //    Producers.Clear();
-        //    foreach (var producer in filteredProducers)
-        //    {
-        //        Producers.Add(new ProducerViewModel(producer, _blc));
-        //    }
-        //}
+            if (MinPower != 0)
+            {
+                filteredSpeakers = filteredSpeakers.Where(s => s.Power >= MinPower);
+            }
+
+            if (MaxWeight != 0)
+            {
+                filteredSpeakers = filteredSpeakers.Where(s => s.Weight <= MaxWeight);
+            }
+
+            if (SelectedColor != "All")
+            {
+                filteredSpeakers = filteredSpeakers.Where(s => s.Color.ToString() == SelectedColor);
+            }
+
+            Speakers.Clear();
+            foreach (var speaker in filteredSpeakers)
+            {
+                Speakers.Add(new SpeakerViewModel(speaker, _blc));
+            }
+        }
     }
 }

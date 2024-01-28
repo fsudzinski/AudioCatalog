@@ -11,6 +11,7 @@ public partial class ProducersPage : ContentPage
     {
         InitializeComponent();
         BindingContext = viewModel;
+        CountryPicker.SelectedIndex = 0;
 
         WeakReferenceMessenger.Default.Register<string>(this, (r, m) =>
         {

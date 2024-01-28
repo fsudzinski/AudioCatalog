@@ -11,13 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioCatalog.BLC", "AudioCa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioCatalog.DAOSQL", "AudioCatalog.DAOSQL\AudioCatalog.DAOSQL.csproj", "{B669970D-0506-4BB4-A772-DE482EE44C25}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioCatalog.ConsoleApp", "AudioCatalog.ConsoleApp\AudioCatalog.ConsoleApp.csproj", "{5B5C30A8-BAA5-4C3E-8F12-C4B907388D5D}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioCatalog.DAOMock", "AudioCatalog.DAOMock\AudioCatalog.DAOMock.csproj", "{DE6F0120-2C1F-4288-8183-13C2B55C8E25}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioCatalog.WebApp", "AudioCatalog.WebApp\AudioCatalog.WebApp.csproj", "{128C1CEA-1E91-4451-98CE-FD42D1232CF8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioCatalog.MAUI", "AudioCatalog.MAUI\AudioCatalog.MAUI.csproj", "{606DB428-F3C9-4C3E-8626-3276B9F7E382}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioCatalog.MAUI", "AudioCatalog.MAUI\AudioCatalog.MAUI.csproj", "{606DB428-F3C9-4C3E-8626-3276B9F7E382}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,10 +39,6 @@ Global
 		{B669970D-0506-4BB4-A772-DE482EE44C25}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B669970D-0506-4BB4-A772-DE482EE44C25}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B669970D-0506-4BB4-A772-DE482EE44C25}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5B5C30A8-BAA5-4C3E-8F12-C4B907388D5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5B5C30A8-BAA5-4C3E-8F12-C4B907388D5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5B5C30A8-BAA5-4C3E-8F12-C4B907388D5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5B5C30A8-BAA5-4C3E-8F12-C4B907388D5D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DE6F0120-2C1F-4288-8183-13C2B55C8E25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DE6F0120-2C1F-4288-8183-13C2B55C8E25}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE6F0120-2C1F-4288-8183-13C2B55C8E25}.Release|Any CPU.ActiveCfg = Release|Any CPU

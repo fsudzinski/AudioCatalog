@@ -50,5 +50,10 @@ namespace Sudzinski.AudioCatalog.MAUI.ViewModels
                 WeakReferenceMessenger.Default.Send("ProducerDeleted");
             }
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

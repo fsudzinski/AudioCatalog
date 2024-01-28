@@ -6,7 +6,89 @@
              Title="Speakers">
     <VerticalStackLayout>
 
-        <!-- Add Search and Country Filter as in the ProducersPage -->
+        <Grid Padding="10,5,10,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <SearchBar
+                Placeholder="Search by Name"
+                Text="{Binding SearchText, Mode=TwoWay}"
+                TextChanged="ProducersSearch_TextChanged"
+                VerticalOptions="Start"
+                HorizontalOptions="FillAndExpand" 
+                Margin="10,5,10,5"
+                Grid.Column="0" />
+
+            <Label
+                Text="Select Producer:"
+                FontSize="Small"
+                TextColor="White"
+                HorizontalOptions="Start"
+                VerticalOptions="Center"
+                Grid.Column="1" />
+            <Picker
+                x:Name="ProducersPicker"
+                ItemsSource="{Binding Producers}"
+                SelectedItem="{Binding SelectedProducer, Mode=TwoWay}"
+                VerticalOptions="Start"
+                HorizontalOptions="FillAndExpand"
+                Margin="10,5,10,5"
+                Grid.Column="2" 
+                SelectedIndexChanged="ProducerPicker_SelectedItemChanged"/>
+
+            <Label
+                Text="Min Power:"
+                FontSize="Small"
+                TextColor="White"
+                HorizontalOptions="Start"
+                VerticalOptions="Center"
+                Grid.Column="3" />
+            <Entry
+                Grid.Column="4" 
+                Text="{Binding MinPower, Mode=TwoWay}" 
+                Margin="10,5,10,5"
+                TextChanged="MinPower_TextChanged" />
+
+            <Label
+                Text="Max weight:"
+                FontSize="Small"
+                TextColor="White"
+                HorizontalOptions="Start"
+                VerticalOptions="Center"
+                Grid.Column="5" />
+            <Entry
+                Grid.Column="6" 
+                Text="{Binding MaxWeight, Mode=TwoWay}" 
+                Margin="10,5,10,5"
+                TextChanged="MaxWeight_TextChanged" />
+
+            <Label
+                Text="Select Color:"
+                FontSize="Small"
+                TextColor="White"
+                HorizontalOptions="Start"
+                VerticalOptions="Center"
+                Grid.Column="7" />
+            <Picker
+                x:Name="ColorPicker"
+                ItemsSource="{Binding Colors}"
+                SelectedItem="{Binding SelectedColor, Mode=TwoWay}"
+                VerticalOptions="Start"
+                HorizontalOptions="FillAndExpand"
+                Margin="10,5,10,5"
+                Grid.Column="8" 
+                SelectedIndexChanged="ColorPicker_SelectedItemChanged"/>
+
+        </Grid>
 
         <Grid BackgroundColor="MediumPurple" Padding="10,5,10,5">
             <Grid.ColumnDefinitions>

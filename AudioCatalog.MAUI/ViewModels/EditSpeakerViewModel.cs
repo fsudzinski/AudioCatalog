@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -12,18 +13,23 @@ namespace Sudzinski.AudioCatalog.MAUI.ViewModels
     {
         private readonly BLC.BLC _blc;
 
-        [ObservableProperty]
-        private int id;
+        private int Id;
         [ObservableProperty]
         private string name;
-        [ObservableProperty]
-        private IProducer producer;
         [ObservableProperty]
         private float power;
         [ObservableProperty]
         private float weight;
+
         [ObservableProperty]
-        private ColorType color;
+        private ObservableCollection<ProducerViewModel> producers;
+        [ObservableProperty]
+        private ProducerViewModel selectedProducer;
+
+        [ObservableProperty]
+        public ColorType[] colors = (ColorType[])Enum.GetValues(typeof(ColorType));
+        [ObservableProperty]
+        private ColorType selectedColor;
 
         public EditSpeakerViewModel(SpeakerViewModel speaker, BLC.BLC blc)
         {
@@ -31,10 +37,15 @@ namespace Sudzinski.AudioCatalog.MAUI.ViewModels
 
             Id = speaker.Id;
             Name = speaker.Name;
-            Producer = speaker.Producer;
             Power = speaker.Power;
             Weight = speaker.Weight;
-            Color = speaker.Color;
+
+            Producers = new ObservableCollection<ProducerViewModel>();
+            Producers.Clear();
+            foreach (var producer in _blc.GetAllProducers())
+            {
+                Producers.Add(new ProducerViewModel(producer, _blc));
+            }
 
             PropertyChanged += OnPropertyChanged;
         }
@@ -42,7 +53,7 @@ namespace Sudzinski.AudioCatalog.MAUI.ViewModels
         [RelayCommand(CanExecute = nameof(CanSaveSpeaker))]
         private void SaveSpeaker()
         {            
-            _blc.UpdateSpeaker(Id, Name, Producer.Id, Power, Weight, Color);
+            _blc.UpdateSpeaker(Id, Name, SelectedProducer.Id, Power, Weight, SelectedColor);
             WeakReferenceMessenger.Default.Send("SpeakerUpdated");
             Application.Current.MainPage.Navigation.PopAsync();            
         }
@@ -50,6 +61,7 @@ namespace Sudzinski.AudioCatalog.MAUI.ViewModels
         private bool CanSaveSpeaker()
         {
             return !string.IsNullOrWhiteSpace(Name)
+                && SelectedProducer != null
                 && Power > 0
                 && Weight > 0;
         }
