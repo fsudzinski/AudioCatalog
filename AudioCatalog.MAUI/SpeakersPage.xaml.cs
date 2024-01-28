@@ -15,9 +15,11 @@ public partial class SpeakersPage : ContentPage
 
         WeakReferenceMessenger.Default.Register<string>(this, (r, m) =>
         {
-            if (m.Equals("SpeakerAdded") || m.Equals("SpeakerDeleted") || m.Equals("SpeakerUpdated") || m.Equals("ProducerDeleted"))
-            {
+            if (m.Equals("SpeakerAdded") || m.Equals("SpeakerDeleted") || m.Equals("SpeakerUpdated") || m.Equals("ProducerAdded") || m.Equals("ProducerDeleted") || m.Equals("ProducerUpdated"))
+            {             
                 viewModel.LoadData();
+                ProducersPicker.SelectedIndex = 0;
+                ColorPicker.SelectedIndex = 0;
             }
         });
     }

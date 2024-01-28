@@ -16,7 +16,8 @@ namespace Sudzinski.AudioCatalog.MAUI.ViewModels
         [ObservableProperty]
         private ObservableCollection<ProducerViewModel> producers;
 
-        public List<string> Countries { set; get; }
+        [ObservableProperty]
+        public ObservableCollection<string> countries;    
         private string countriesPickerPlaceholder = "All";
 
         public ICommand OpenAddProducerPageCommand { get; }
@@ -25,7 +26,8 @@ namespace Sudzinski.AudioCatalog.MAUI.ViewModels
         {
             _blc = blc;
 
-            producers = new ObservableCollection<ProducerViewModel>();
+            Producers = new ObservableCollection<ProducerViewModel>();
+            Countries = new ObservableCollection<string>();
 
             LoadData();
 
@@ -41,8 +43,13 @@ namespace Sudzinski.AudioCatalog.MAUI.ViewModels
                 Producers.Add(new ProducerViewModel(producer, _blc));
             }
 
-            Countries = Producers.Select(p => p.CountryOfOrigin).Distinct().ToList();
-            Countries.Insert(0, countriesPickerPlaceholder);
+
+            Countries.Clear();
+            Countries.Add(countriesPickerPlaceholder);
+            foreach (var country in Producers.Select(p => p.CountryOfOrigin).Distinct().ToList())
+            {
+                Countries.Add(country);
+            }
         }
 
         private void OnOpenAddProducerPage()
@@ -64,11 +71,14 @@ namespace Sudzinski.AudioCatalog.MAUI.ViewModels
                 filteredProducers = filteredProducers.Where(p => p.CountryOfOrigin.ToLowerInvariant() == SelectedCountry.ToLowerInvariant());
             }
 
-            Producers.Clear();
+            var newProducersCollection = new ObservableCollection<ProducerViewModel>();
+
             foreach (var producer in filteredProducers)
             {
-                Producers.Add(new ProducerViewModel(producer, _blc));
+                newProducersCollection.Add(new ProducerViewModel(producer, _blc));
             }
+
+            Producers = newProducersCollection;
         }
 
     }

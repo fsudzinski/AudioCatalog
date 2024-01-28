@@ -16,8 +16,9 @@ public partial class ProducersPage : ContentPage
         WeakReferenceMessenger.Default.Register<string>(this, (r, m) =>
         {
             if (m.Equals("ProducerAdded") || m.Equals("ProducerDeleted") || m.Equals("ProducerUpdated"))
-            {
+            {              
                 viewModel.LoadData();
+                CountryPicker.SelectedIndex = 0;
             }            
         });
     }

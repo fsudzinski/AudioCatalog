@@ -7,7 +7,7 @@ public partial class EditSpeakerPage : ContentPage
 	{
 		InitializeComponent();
         BindingContext = viewModel;
-        ColorPicker.SelectedIndex = 0;
-        ProducerPicker.SelectedIndex = 0;
+        ColorPicker.SelectedItem = viewModel.SelectedColor;
+        ProducerPicker.SelectedItem = viewModel.SelectedProducer;
     }
 }

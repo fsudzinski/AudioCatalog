@@ -39,6 +39,7 @@ namespace Sudzinski.AudioCatalog.MAUI.ViewModels
             Name = speaker.Name;
             Power = speaker.Power;
             Weight = speaker.Weight;
+            selectedColor = speaker.Color;            
 
             Producers = new ObservableCollection<ProducerViewModel>();
             Producers.Clear();
@@ -46,6 +47,8 @@ namespace Sudzinski.AudioCatalog.MAUI.ViewModels
             {
                 Producers.Add(new ProducerViewModel(producer, _blc));
             }
+
+            selectedProducer = Producers.FirstOrDefault(p => p.Id == speaker.Producer.Id);
 
             PropertyChanged += OnPropertyChanged;
         }

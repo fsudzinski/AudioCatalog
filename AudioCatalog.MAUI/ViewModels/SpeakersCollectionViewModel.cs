@@ -2,7 +2,6 @@
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Sudzinski.AudioCatalog.Core;
-using Sudzinski.AudioCatalog.Interfaces;
 
 namespace Sudzinski.AudioCatalog.MAUI.ViewModels
 {
@@ -21,7 +20,8 @@ namespace Sudzinski.AudioCatalog.MAUI.ViewModels
         [ObservableProperty]
         private string selectedColor;
 
-        public List<ProducerViewModel> Producers { set; get; }
+        [ObservableProperty]
+        private ObservableCollection<ProducerViewModel> producers;
         public List<string> Colors { get; } = new List<string> { "All" };
 
 
@@ -34,7 +34,8 @@ namespace Sudzinski.AudioCatalog.MAUI.ViewModels
         {
             _blc = blc;
 
-            speakers = new ObservableCollection<SpeakerViewModel>();
+            Speakers = new ObservableCollection<SpeakerViewModel>();
+            Producers = new ObservableCollection<ProducerViewModel>();
 
             LoadData();
 
@@ -49,14 +50,12 @@ namespace Sudzinski.AudioCatalog.MAUI.ViewModels
         public void LoadData()
         {
             Speakers.Clear();
-
             foreach (var speaker in _blc.GetAllSpeakers())
             {
                 Speakers.Add(new SpeakerViewModel(speaker, _blc));
             }
 
-            Producers = new List<ProducerViewModel>();
-            
+            Producers.Clear();            
             foreach (var producer in _blc.GetAllProducers())
             {
                 Producers.Add(new ProducerViewModel(producer, _blc));
@@ -98,16 +97,19 @@ namespace Sudzinski.AudioCatalog.MAUI.ViewModels
                 filteredSpeakers = filteredSpeakers.Where(s => s.Weight <= MaxWeight);
             }
 
-            if (SelectedColor != "All")
+            if (SelectedColor != null && SelectedColor != "All")
             {
                 filteredSpeakers = filteredSpeakers.Where(s => s.Color.ToString() == SelectedColor);
             }
 
-            Speakers.Clear();
+            var newSpeakersCollection = new ObservableCollection<SpeakerViewModel>();
+
             foreach (var speaker in filteredSpeakers)
             {
-                Speakers.Add(new SpeakerViewModel(speaker, _blc));
+                newSpeakersCollection.Add(new SpeakerViewModel(speaker, _blc));
             }
+
+            Speakers = newSpeakersCollection;
         }
     }
 }
