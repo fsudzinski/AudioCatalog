@@ -1,12 +1,14 @@
-﻿using System.Windows.Input;
+﻿using System.ComponentModel;
+using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace Sudzinski.AudioCatalog.MAUI.ViewModels
 {
     public partial class AddProducerViewModel : ObservableObject
     {
         private readonly BLC.BLC _blc;
-        public ICommand SaveProducerCommand { get; }
 
         [ObservableProperty]
         private string name;
@@ -18,29 +20,38 @@ namespace Sudzinski.AudioCatalog.MAUI.ViewModels
         public AddProducerViewModel(BLC.BLC blc)
         {
             _blc = blc;
-            SaveProducerCommand = new Command(OnSaveProducer);
 
             Name = string.Empty;
             CountryOfOrigin = string.Empty;
             Website = string.Empty;
+
+            PropertyChanged += OnPropertyChanged;
         }
 
-        private void OnSaveProducer()
+        [RelayCommand(CanExecute = nameof(CanSaveProducer))]
+        private void SaveProducer()
         {
-            if (!string.IsNullOrWhiteSpace(Name)
+            
+            _blc.CreateProducer(Name, CountryOfOrigin, Website);
+
+            Name = string.Empty;
+            CountryOfOrigin = string.Empty;
+            Website = string.Empty;
+
+            WeakReferenceMessenger.Default.Send("ProducerAdded");
+            Application.Current.MainPage.Navigation.PopAsync();
+        }
+
+        private bool CanSaveProducer()
+        {
+            return !string.IsNullOrWhiteSpace(Name)
                 && !string.IsNullOrWhiteSpace(CountryOfOrigin)
-                && !string.IsNullOrWhiteSpace(Website))
-            {
-                _blc.CreateProducer(Name, CountryOfOrigin, Website);
+                && !string.IsNullOrWhiteSpace(Website);
+        }
 
-                Name = string.Empty;
-                CountryOfOrigin = string.Empty;
-                Website = string.Empty;
-
-                MessagingCenter.Send(this, "ProducerAdded");
-
-                Application.Current.MainPage.Navigation.PopAsync();
-            }
+        void OnPropertyChanged(object sender, PropertyChangedEventArgs args)
+        {
+            SaveProducerCommand.NotifyCanExecuteChanged();
         }
     }
 }

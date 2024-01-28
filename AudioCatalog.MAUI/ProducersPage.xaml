@@ -16,8 +16,7 @@
             <SearchBar
                 Placeholder="Search by Name"
                 Text="{Binding SearchText, Mode=TwoWay}"
-                SearchCommand="{Binding SearchCommand}"
-                SearchCommandParameter="{Binding SearchText}"
+                TextChanged="ProducersSearch_TextChanged"
                 VerticalOptions="Start"
                 HorizontalOptions="FillAndExpand" 
                 Margin="10,5,10,5"
@@ -37,7 +36,7 @@
                 HorizontalOptions="FillAndExpand"
                 Margin="10,5,10,5"
                 Grid.Column="2" 
-                SelectedIndexChanged="{Binding FilterByCountry}"/>
+                SelectedIndexChanged="CountryPicker_SelectedItemChanged"/>
         </Grid>
 
         <Grid BackgroundColor="MediumPurple" Padding="10,5,10,5">

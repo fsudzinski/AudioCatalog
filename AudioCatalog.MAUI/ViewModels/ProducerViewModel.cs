@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
 using Sudzinski.AudioCatalog.Interfaces;
 
 namespace Sudzinski.AudioCatalog.MAUI.ViewModels
@@ -42,11 +43,11 @@ namespace Sudzinski.AudioCatalog.MAUI.ViewModels
 
         private async Task OnDeleteProducer()
         {
-            bool result = await App.Current.MainPage.DisplayAlert("Confirm Delete", "Are you sure you want to delete this producer?\nWarning: All speakers associated to this producer will be deleted!", "Yes", "No");
+            bool result = await App.Current.MainPage.DisplayAlert("Confirm Delete", "Are you sure you want to delete this producer?\n\nWARNING: All speakers associated to this producer will be deleted!", "Yes", "No");
             if (result)
             {
                 _blc.DeleteProducer(Id);
-                MessagingCenter.Send(this, "ProducerDeleted");
+                WeakReferenceMessenger.Default.Send("ProducerDeleted");
             }
         }
     }

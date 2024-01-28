@@ -1,12 +1,14 @@
-﻿using System.Windows.Input;
+﻿using System.ComponentModel;
+using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace Sudzinski.AudioCatalog.MAUI.ViewModels
 {
     public partial class EditProducerViewModel : ObservableObject
     {
         private readonly BLC.BLC _blc;
-        public ICommand SaveProducerCommand { get; }
 
         [ObservableProperty]
         private int id;
@@ -20,26 +22,38 @@ namespace Sudzinski.AudioCatalog.MAUI.ViewModels
         public EditProducerViewModel(ProducerViewModel producer, BLC.BLC blc)
         {
             _blc = blc;
-            SaveProducerCommand = new Command(OnSaveProducer);
 
             Id = producer.Id;
             Name = producer.Name;
             CountryOfOrigin = producer.CountryOfOrigin;
             Website = producer.Website;
+
+            PropertyChanged += OnPropertyChanged;
         }
 
-        private void OnSaveProducer()
+        [RelayCommand(CanExecute = nameof(CanSaveProducer))]
+        private void SaveProducer()
         {
             if (!string.IsNullOrWhiteSpace(Name)
                 && !string.IsNullOrWhiteSpace(CountryOfOrigin)
                 && !string.IsNullOrWhiteSpace(Website))
             {
                 _blc.UpdateProducer(Id, Name, CountryOfOrigin, Website);
-
-                MessagingCenter.Send(this, "ProducerUpdated");
-
+                WeakReferenceMessenger.Default.Send("ProducerUpdated");
                 Application.Current.MainPage.Navigation.PopAsync();
             }
+        }
+
+        private bool CanSaveProducer()
+        {
+            return !string.IsNullOrWhiteSpace(Name)
+                && !string.IsNullOrWhiteSpace(CountryOfOrigin)
+                && !string.IsNullOrWhiteSpace(Website);
+        }
+
+        void OnPropertyChanged(object sender, PropertyChangedEventArgs args)
+        {
+            SaveProducerCommand.NotifyCanExecuteChanged();
         }
     }
 }

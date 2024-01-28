@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Sudzinski.AudioCatalog.Interfaces;
 
 namespace Sudzinski.AudioCatalog.MAUI.ViewModels
 {
@@ -20,8 +21,7 @@ namespace Sudzinski.AudioCatalog.MAUI.ViewModels
 
 
         public ICommand OpenAddProducerPageCommand { get; }
-        public ICommand SearchCommand { get; }
-        //public ICommand FilterByCountryCommand { get; }
+        //public ICommand SearchCommand { get; }
 
         public ProducersCollectionViewModel(BLC.BLC blc)
         {
@@ -32,8 +32,7 @@ namespace Sudzinski.AudioCatalog.MAUI.ViewModels
             LoadData();
 
             OpenAddProducerPageCommand = new Command(OnOpenAddProducerPage);
-            SearchCommand = new Command<string>(PerformSearch);
-            //FilterByCountryCommand = new Command(FilterByCountry);
+            //SearchCommand = new Command(PerformSearch);
         }
 
         public void LoadData()
@@ -53,33 +52,27 @@ namespace Sudzinski.AudioCatalog.MAUI.ViewModels
         {
             App.Current.MainPage.Navigation.PushAsync(new AddProducerPage(new AddProducerViewModel(_blc)));
         }
-        private void PerformSearch(string searchText)
-        {
-            LoadData();
-            if (!string.IsNullOrWhiteSpace(searchText))
-            {            
-                searchText = searchText.ToLowerInvariant();
 
-                var filteredProducers = new ObservableCollection<ProducerViewModel>(
-                    Producers.Where(p => p.Name.ToLowerInvariant().Contains(searchText))
-                );
-
-                Producers = filteredProducers;
-            }
-        }
-        private void FilterByCountry(object sender, EventArgs e)
+        public void FilterProducers()
         {
-            LoadData();
-            if (!string.Equals(SelectedCountry, countriesPickerPlaceholder))
+            var filteredProducers = _blc.GetAllProducers();
+
+            if (!string.IsNullOrWhiteSpace(SearchText))
             {
-                SelectedCountry = SelectedCountry.ToLowerInvariant();
+                filteredProducers = filteredProducers.Where(p => p.Name.ToLowerInvariant().Contains(SearchText.ToLowerInvariant()));
+            }
 
-                var filteredProducers = new ObservableCollection<ProducerViewModel>(
-                    Producers.Where(p => p.CountryOfOrigin.ToLowerInvariant() == SelectedCountry)
-                );
-                
-                Producers = filteredProducers;
+            if (!string.IsNullOrWhiteSpace(SelectedCountry) && !string.Equals(SelectedCountry, countriesPickerPlaceholder))
+            {
+                filteredProducers = filteredProducers.Where(p => p.CountryOfOrigin.ToLowerInvariant() == SelectedCountry.ToLowerInvariant());
+            }
+
+            Producers.Clear();
+            foreach (var producer in filteredProducers)
+            {
+                Producers.Add(new ProducerViewModel(producer, _blc));
             }
         }
+
     }
 }
